@@ -4,12 +4,12 @@ const { authHandler } = require('../middleware/authMiddleware')
 
 const userRouter = express.Router()
 
-userRouter.get('/all',getAllUsers)
-userRouter.get('/:username',getUserByUsername)
-userRouter.post('/new',createUser)
+userRouter.get('/all',authHandler,getAllUsers)
+userRouter.get('/:username',authHandler,getUserByUsername)
+userRouter.post('/new',authHandler,createUser)
 userRouter.post('/admin',createAdmin)
 userRouter.post('/login',connectUser)
-userRouter.delete('/:email',deleteUser)
-userRouter.delete('/all',deleteAllUser)
+userRouter.delete('/:email',authHandler,deleteUser)
+userRouter.delete('/all',authHandler,deleteAllUser)
 
 module.exports = {userRouter}

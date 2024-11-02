@@ -1,0 +1,2 @@
+POST https://bsic-api.up.railway.app/api/users/admin
+POST https://bsic-api.up.railway.app/api/users/login

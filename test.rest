@@ -1,1 +1,2 @@
-GET http://localhost:4000/api/users/all HTTP/1.1
+GET https://bsic-api.up.railway.app/api/customers/all
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzI2MWRlYWY0MzE1MjcxN2E4OGY5YjAiLCJpYXQiOjE3MzA1NTQ3MjZ9.obRbhcuLKFUT0xu81b1UcCZ1MVKqzGQScKJfGmb9PPw
