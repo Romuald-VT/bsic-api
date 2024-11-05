@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler')
-const {Customer,validateInput} = require('../models/customer')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const {Customer,validateInput, validateCustomerLogin} = require('../models/customer')
 
 
 const getAllCustomers = asyncHandler(async(req,res)=>{
@@ -61,24 +63,48 @@ const createCustomer = asyncHandler(async(req,res)=>{
     {
         throw new Error("cet utilisateur existe deja !")
     }
-    console.log(req.body)
-    const NIC = req.files.NIC ? req.files.NIC[0].path : null;
-    const NIC_Verso = req.files.NIC_Verso ? req.files.NIC_Verso[0].path : null;
+
+    const salt = await bcrypt.genSalt(10)
+    const hashPassword = await bcrypt.hash(req.body.password,salt)
     
     const customer = new Customer({
         firstname:req.body.firstname,
         lastname:req.body.lastname,
         email:req.body.email,
+        password:hashPassword,
         phone:req.body.phone,
         town:req.body.town,
-        location:req.body.location,
-        Job:req.body.Job,
-        NIC:NIC,
-        NIC_Verso:NIC_Verso
+        amount:req.body.amount,
+        job:req.body.job,
+        
     })
     const savedData = await customer.save()
     return res.status(201).json({data:savedData})
 
+})
+
+const customerLogin = asyncHandler(async(req,res)=>{
+     
+    const {error} = validateCustomerLogin(req.body)
+
+    if(error)
+    {
+        throw new Error(error.details[0].message)
+    }
+    const customer = await Customer.findOne({email:req.body.email})
+    if(!customer)
+    {
+        return res.status(404).json({message:'email et/ou mot de passe incorrect'})
+    }
+    const isSame = await bcrypt.compare(req.body.password,customer.password)
+    if(!isSame)
+    {
+        return res.status(400).json({message:'email et/ou mot de passe incorrect'})
+    }
+    const token = await jwt.sign({id:customer._id,email:customer.email},process.env.JWT_SECRET,{expiresIn:'2h'})
+
+    return res.status(200).json({token:token})
+    
 })
 
 const updateCustomer = asyncHandler(async(req,res)=>{
@@ -96,13 +122,14 @@ const updateCustomer = asyncHandler(async(req,res)=>{
         res.status(404).json({message:"utilisateur introuvable !"})
     }
     const updatedCustomer = await Customer.updateOne({email:req.params.email},{
-        $set:{
-            firstname:req.body.firstname,
-            lastname:req.body.lastname,
-            email: req.body.email,
-            phone:req.body.phone,
-            town:req.body.town,
-            location:req.body.location
+        $set:{   
+        firstname:req.body.firstname,
+        lastname:req.body.lastname,
+        email:req.body.email,
+        phone:req.body.phone,
+        town:req.body.town,
+        amount:req.body.amount,
+        Job:req.body.Job,
         }
     })
 
@@ -124,4 +151,4 @@ const deleteAllCustomers = asyncHandler(async(req,res)=>{
     return res.status(204).json({message: deletedCustomer})
 })
 
-module.exports = {getAllCustomers,getCustomerByEmail,getCustomerByName,getCustomerByTown,createCustomer,updateCustomer,deleteCustomerByEmail,deleteAllCustomers}
+module.exports = {getAllCustomers,getCustomerByEmail,getCustomerByName,customerLogin,getCustomerByTown,createCustomer,updateCustomer,deleteCustomerByEmail,deleteAllCustomers}

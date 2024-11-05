@@ -6,19 +6,21 @@ const {getAllCustomers,
     createCustomer,
     updateCustomer,
     deleteCustomerByEmail,
-    deleteAllCustomers} = require('../controllers/customerController')
+    deleteAllCustomers,
+    customerLogin} = require('../controllers/customerController')
 const {upload} =  require('../fileStorage')
-const {authHandler} = require('../middleware/authMiddleware')
+const {customerAuthHandler,authHandler} = require('../middleware/authMiddleware')
 
 const customerRouter = express.Router()
 
 customerRouter.get('/all',authHandler,getAllCustomers)
-customerRouter.get('/:email',authHandler,getCustomerByEmail)
-customerRouter.get('/:name',authHandler,getCustomerByName)
-customerRouter.get('/:town',authHandler,getCustomerByTown)
-customerRouter.post('/add',upload.fields([{name:'NIC'},{name:'NIC_Verso'}]),createCustomer)
-customerRouter.put('/:email',authHandler,updateCustomer)
-customerRouter.delete('/:email',deleteCustomerByEmail)
-customerRouter.delete('/all',authHandler,deleteAllCustomers)
+customerRouter.get('/:email',customerAuthHandler,getCustomerByEmail)
+customerRouter.get('/:name',customerAuthHandler,getCustomerByName)
+customerRouter.get('/:town',customerAuthHandler,getCustomerByTown)
+customerRouter.post('/add',createCustomer)
+customerRouter.post('/login',customerLogin)
+customerRouter.put('/:email',customerAuthHandler,updateCustomer)
+customerRouter.delete('/:email',customerAuthHandler,deleteCustomerByEmail)
+customerRouter.delete('/all',customerAuthHandler,deleteAllCustomers)
 
 module.exports={customerRouter}

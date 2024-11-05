@@ -1,2 +1,42 @@
 POST https://bsic-api.up.railway.app/api/users/admin
 POST https://bsic-api.up.railway.app/api/users/login
+
+
+*** login utilisateur
+"email":"vitogenovese@gmail.com",
+"password":"478Wser0DD"
+
+"email": "bumpyjohnson@gmail.com",
+"password":"H3llsw0rth",
+
+"email": "franklucas@gmail.com",
+"password":"Fr4nKLuK45",
+
+"email": "vincentgigante@gmail.com",
+"password":"V1nC3ntG1g4nt3",
+
+"email": "joebonanno@gmail.com",
+"password":"b0n4nn04567",
+
+"email": "bennyeggs@gmail.com",
+"password":"B3nniEgg5",
+
+"email": "olygigante@gmail.com",
+"password":"0l7G1gante123",
+
+"email": "jamespatten@gmail.com",
+"password":"2877IUssidu",
+
+***routes locales***
+POST http://localhost:4000/api/customers/add HTTP/1.1
+POST http://localhost:4000/api/customers/login HTTP/1.1
+POST http://localhost:4000/api/users/admin HTTP/1.1
+POST http://localhost:4000/api/users/login HTTP/1.1
+GET http://localhost:4000/api/customers/mariogenovese@gmail.com HTTP/1.1
+GET http://localhost:4000/api/customers/Genovese HTTP/1.1
+GET http://localhost:4000/api/customers/all HTTP/1.1
+
+***login admin***
+
+"username":"Bowler",
+"password":"B0wlER237"

@@ -7,12 +7,12 @@ const customerSchema = new Schema({
     firstname:String,
     lastname:String,
     email:{type:String,unique:true},
+    password:String,
     phone:String,
     town:String,
-    location:String,
-    NIC:{type:String},
-    NIC_Verso:{type:String},
-    Job:String
+    photo_profil:String,
+    job:String,
+    amount:Number
 })
 
 const Customer = model('Customer',customerSchema)
@@ -22,15 +22,23 @@ const validateInput = function( data)
         firstname: Joi.string().min(3).max(100).required(),
         lastname: Joi.string().min(3).max(100).required(),
         email: Joi.string().email().required(),
+        password: Joi.string().pattern(/[a-z0-9]/i).required(),
         phone: Joi.string().min(9).required(),
-        town:Joi.string().min(3).max(127),
-        location: Joi.string().min(10).required(),
-        Job: Joi.string().min(3).required(),
-        NIC: Joi.string(),
-        NIC_Verso: Joi.string()
-
+        town:Joi.string().min(3).max(127).required(),
+        amount:Joi.number().positive().required(),
+        job: Joi.string().min(3).required(),
     })
     return customerInputSchema.validate(data)
 }
 
-module.exports ={Customer,validateInput}
+const validateCustomerLogin = function(data)
+{
+    const customerLoginSchema = Joi.object({
+        email:Joi.string().email().required(),
+        password:Joi.string().pattern(/[a-z0-9]/i)
+    })
+
+    return customerLoginSchema.validate(data)
+}
+
+module.exports ={Customer,validateInput,validateCustomerLogin}
