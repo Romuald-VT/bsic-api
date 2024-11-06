@@ -74,7 +74,6 @@ const createCustomer = asyncHandler(async(req,res)=>{
         password:hashPassword,
         phone:req.body.phone,
         town:req.body.town,
-        amount:req.body.amount,
         job:req.body.job,
         
     })
@@ -83,6 +82,42 @@ const createCustomer = asyncHandler(async(req,res)=>{
 
 })
 
+const notifyClient = asyncHandler(async(req,res)=>{
+    
+})
+
+
+const addAmount = asyncHandler(async(req,res)=>{
+    
+    if(!req.params.email) return res.status(400).json({message:"veuillez ajouter un email valide"})
+    
+    if(!req.body.amount) return res.status(400).json({message:"veuillez entrer un montant valide !"})
+    
+    const client = await Customer.findOne({email:req.params.email})
+
+    if(!client) return req.status(404).json({message:"client introuvable !"})
+    
+    client.amount = req.body.amount
+   const result =  await client.save()
+
+    return res.status(200).json({data:result})
+})
+
+const setAccountType = asyncHandler(async(req,res)=>{
+    
+    if(!req.params.email) return res.status(400).json({message:"veuillez entrer un email valide !"})
+    
+    if(!req.body.accountType) return res.status(400).json({message:"type de compte non reconnu !"})
+    
+    const client = await Customer.findOne({email: req.params.email})
+    if(!client) return res.status(404).json({message:"utilisateur introuvable !"}) 
+    
+    client.accountType = req.body.accountType
+    const result = await client.save()
+
+    return res.status(200).json({data:result})
+    
+})
 const customerLogin = asyncHandler(async(req,res)=>{
      
     const {error} = validateCustomerLogin(req.body)
@@ -128,8 +163,7 @@ const updateCustomer = asyncHandler(async(req,res)=>{
         email:req.body.email,
         phone:req.body.phone,
         town:req.body.town,
-        amount:req.body.amount,
-        Job:req.body.Job,
+        job:req.body.job,
         }
     })
 
@@ -151,4 +185,4 @@ const deleteAllCustomers = asyncHandler(async(req,res)=>{
     return res.status(204).json({message: deletedCustomer})
 })
 
-module.exports = {getAllCustomers,getCustomerByEmail,getCustomerByName,customerLogin,getCustomerByTown,createCustomer,updateCustomer,deleteCustomerByEmail,deleteAllCustomers}
+module.exports = {getAllCustomers,addAmount,getCustomerByEmail,getCustomerByName,customerLogin,getCustomerByTown,createCustomer,updateCustomer,deleteCustomerByEmail,deleteAllCustomers}

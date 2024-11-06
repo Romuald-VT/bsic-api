@@ -10,9 +10,11 @@ const customerSchema = new Schema({
     password:String,
     phone:String,
     town:String,
+    location:String,
     photo_profil:String,
     job:String,
-    amount:Number
+    amount:Number,
+    accountType:String
 })
 
 const Customer = model('Customer',customerSchema)
@@ -25,7 +27,7 @@ const validateInput = function( data)
         password: Joi.string().pattern(/[a-z0-9]/i).required(),
         phone: Joi.string().min(9).required(),
         town:Joi.string().min(3).max(127).required(),
-        amount:Joi.number().positive().required(),
+        location:Joi.string().required(),
         job: Joi.string().min(3).required(),
     })
     return customerInputSchema.validate(data)
