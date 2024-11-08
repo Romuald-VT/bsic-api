@@ -73,6 +73,7 @@ const createCustomer = asyncHandler(async(req,res)=>{
         email:req.body.email,
         password:hashPassword,
         phone:req.body.phone,
+        location:req.body.location,
         town:req.body.town,
         job:req.body.job,
         
@@ -100,7 +101,7 @@ const addAmount = asyncHandler(async(req,res)=>{
     client.amount = req.body.amount
    const result =  await client.save()
 
-    return res.status(200).json({data:result})
+    return res.status(200).json({firstname:result.firstname,lastname:result.lastname,amount:result.amount})
 })
 
 const setAccountType = asyncHandler(async(req,res)=>{
@@ -115,7 +116,7 @@ const setAccountType = asyncHandler(async(req,res)=>{
     client.accountType = req.body.accountType
     const result = await client.save()
 
-    return res.status(200).json({data:result})
+    return res.status(200).json({firstname:result.firstname,lastname:result.lastname,accountType:result.accountType})
     
 })
 const customerLogin = asyncHandler(async(req,res)=>{
@@ -175,7 +176,7 @@ const deleteCustomerByEmail = asyncHandler(async(req,res)=>{
     {
         throw new Error("veuilez entrer un email valide !")
     }
-    const deletedUser= await Customer.deleteOne({email:req.body.email});
+    const deletedUser= await Customer.deleteOne({email:req.params.email});
     return res.status(200).json({message: deletedUser})
 })
 
@@ -185,4 +186,7 @@ const deleteAllCustomers = asyncHandler(async(req,res)=>{
     return res.status(204).json({message: deletedCustomer})
 })
 
-module.exports = {getAllCustomers,addAmount,getCustomerByEmail,getCustomerByName,customerLogin,getCustomerByTown,createCustomer,updateCustomer,deleteCustomerByEmail,deleteAllCustomers}
+module.exports = {getAllCustomers,addAmount,getCustomerByEmail,
+    getCustomerByName,customerLogin,getCustomerByTown,
+    createCustomer,updateCustomer,deleteCustomerByEmail,
+    deleteAllCustomers,setAccountType}

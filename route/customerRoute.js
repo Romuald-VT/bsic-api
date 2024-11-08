@@ -7,7 +7,9 @@ const {getAllCustomers,
     updateCustomer,
     deleteCustomerByEmail,
     deleteAllCustomers,
-    customerLogin} = require('../controllers/customerController')
+    customerLogin,
+    addAmount,
+    setAccountType} = require('../controllers/customerController')
 const {upload} =  require('../fileStorage')
 const {customerAuthHandler,authHandler} = require('../middleware/authMiddleware')
 
@@ -17,10 +19,12 @@ customerRouter.get('/all',authHandler,getAllCustomers)
 customerRouter.get('/:email',customerAuthHandler,getCustomerByEmail)
 customerRouter.get('/:name',customerAuthHandler,getCustomerByName)
 customerRouter.get('/:town',customerAuthHandler,getCustomerByTown)
-customerRouter.post('/add',createCustomer)
-customerRouter.post('/login',customerLogin)
+customerRouter.post('/:email',authHandler,addAmount)
+customerRouter.post('/acounttype/:email',authHandler,setAccountType)
+customerRouter.post('/accounts/add',createCustomer)
+customerRouter.post('/accounts/login',customerLogin)
 customerRouter.put('/:email',customerAuthHandler,updateCustomer)
-customerRouter.delete('/:email',customerAuthHandler,deleteCustomerByEmail)
-customerRouter.delete('/all',customerAuthHandler,deleteAllCustomers)
+customerRouter.delete('/:email',authHandler,deleteCustomerByEmail)
+customerRouter.delete('/all',authHandler,deleteAllCustomers)
 
 module.exports={customerRouter}
