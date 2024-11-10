@@ -1,5 +1,6 @@
 const jwt  = require('jsonwebtoken')
 const { User } = require('../models/user')
+const { Customer } = require('../models/customer')
 
 const authHandler = async(req,res,next)=>{
     const token = req.header('Authorization')
@@ -26,7 +27,7 @@ const customerAuthHandler = async(req,res,next)=>{
         return res.status(401).json({message: "acces refuse !"})
     }
     let decode = await jwt.verify(token,process.env.JWT_SECRET)
-    let user = await User.findById({_id:decode._id,email:decode.email}).select('-password')
+    let user = await Customer.findById({_id:decode.id,email:decode.email}).select('-password')
     if(!user)
     {
         throw new Error("tentative d'intrusion arret du systeme !")

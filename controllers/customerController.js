@@ -30,12 +30,12 @@ const getCustomerByEmail = asyncHandler(async(req,res)=>{
         {
             return res.status(400).json({message:"veuillez entrer un email  valide "})
         }
-        const data = await Customer.find({email:req.params.email})
+        const data = await Customer.find({email:req.params.email}).select('-password')
         if(!data)
         {
             return res.status(404).json({message:"l'utilisateur recherche est introuvable !"})
         }
-        return res.status(200).json({data:data})
+        return res.status(200).json({customer:data})
 })
 
 const getCustomerByTown = asyncHandler(async(req,res)=>{
@@ -72,14 +72,12 @@ const createCustomer = asyncHandler(async(req,res)=>{
         lastname:req.body.lastname,
         email:req.body.email,
         password:hashPassword,
-        phone:req.body.phone,
-        location:req.body.location,
-        town:req.body.town,
         job:req.body.job,
         
     })
     const savedData = await customer.save()
-    return res.status(201).json({data:savedData})
+    const token = await jwt.sign({id:savedData._id,email:savedData.email},process.env.JWT_SECRET)
+    return res.status(201).json({data:savedData,token:token})
 
 })
 
@@ -137,9 +135,13 @@ const customerLogin = asyncHandler(async(req,res)=>{
     {
         return res.status(400).json({message:'email et/ou mot de passe incorrect'})
     }
-    const token = await jwt.sign({id:customer._id,email:customer.email},process.env.JWT_SECRET,{expiresIn:'2h'})
+    const data = {
+        id: customer._id,
+        email: customer.email
+    }
+    const token = await jwt.sign({id:customer._id,email:customer.email},process.env.JWT_SECRET)
 
-    return res.status(200).json({token:token})
+    return res.status(200).json({customer:data,usertoken:token})
     
 })
 
@@ -162,8 +164,7 @@ const updateCustomer = asyncHandler(async(req,res)=>{
         firstname:req.body.firstname,
         lastname:req.body.lastname,
         email:req.body.email,
-        phone:req.body.phone,
-        town:req.body.town,
+        password:req.body.password,
         job:req.body.job,
         }
     })

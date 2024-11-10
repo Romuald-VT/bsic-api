@@ -2,7 +2,7 @@
 /requests
 /uploads
 .env
-endpoint.txt
+endpoints.txt
 test.rest
 
 

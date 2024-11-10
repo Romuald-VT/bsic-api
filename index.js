@@ -9,13 +9,31 @@ const helmet = require('helmet')
 
 const app = express()
 const port = process.env.SERVER_PORT || 4000
-
+const corsParams={
+    origin: ['http://localhost:5173', 'https://www.bsicbankcameroun.com'],
+    
+    // Méthodes HTTP autorisées
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    
+    // Headers autorisés
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    
+    // Expose ces headers côté client
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    
+    // Autorise l'envoi de cookies
+    credentials: true,
+    
+    
+    // Durée de mise en cache des résultats préflight (en secondes)
+    maxAge: 86400
+}
 
 dbConnection()
 
+app.use(cors(corsParams))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
 app.use(compression())
 app.use(helmet())
 
