@@ -9,3 +9,5 @@
 {"level":"error","message":"connect ECONNREFUSED 127.0.0.1:27017"}
 {"level":"error","message":"connect ECONNREFUSED 127.0.0.1:27017"}
 {"level":"error","message":"connect ECONNREFUSED 127.0.0.1:27017"}
+{"level":"error","message":"connection timed out"}
+{"level":"error","message":"connection timed out"}

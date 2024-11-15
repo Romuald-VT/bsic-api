@@ -4,7 +4,7 @@ const { authHandler } = require('../middleware/authMiddleware')
 
 const userRouter = express.Router()
 
-userRouter.get('/all',authHandler,getAllUsers)
+userRouter.get('/all',getAllUsers)
 userRouter.get('/:username',authHandler,getUserByUsername)
 userRouter.post('/new',authHandler,createUser)
 userRouter.post('/admin',createAdmin)
