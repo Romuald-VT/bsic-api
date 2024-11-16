@@ -9,7 +9,6 @@ const authHandler = async(req,res,next)=>{
         return res.status(401).json({message: "acces refuse !"})
     }
     let decode = await jwt.verify(token,process.env.JWT_SECRET)
-    console.log(decode)
     let user = await User.findById({_id:decode.id}).select('-password')
     if(!user)
     {
@@ -27,6 +26,7 @@ const customerAuthHandler = async(req,res,next)=>{
     {
         return res.status(401).json({message: "acces refuse !"})
     }
+    console.log(decode)
     let decode = await jwt.verify(token,process.env.JWT_SECRET)
     console.log(decode)
     let user = await Customer.findById({id:decode.id})
