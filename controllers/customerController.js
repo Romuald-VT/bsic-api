@@ -107,7 +107,7 @@ const showInfo = asyncHandler(async(req,res)=>{
     {
         throw new Error('veuillez entrer un code utilisateur valide !')
     }
-    const data = await Customer.findOne({customerUUID:req.params.code}).select('-id','-customerUUId')
+    const data = await Customer.findOne({customerUUID:req.params.code}).select('-customerUUId')
     if(!data)
     {
         return res.status(404).json({message:"cet utilisateur est introuvable !"})

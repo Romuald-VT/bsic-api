@@ -9,7 +9,7 @@ const {getAllCustomers,
     setAccountType,
     showInfo} = require('../controllers/customerController')
 const {upload} =  require('../fileStorage')
-const {customerAuthHandler,authHandler} = require('../middleware/authMiddleware')
+const {authHandler} = require('../middleware/authMiddleware')
 
 const customerRouter = express.Router()
 
