@@ -27,7 +27,7 @@ const getCustomerByEmail = asyncHandler(async(req,res)=>{
 
 const generateUUID = ()=>{
 
-    const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'
     let i=0;
     let code = []
     for(i=0;i<13;i++)
@@ -35,7 +35,6 @@ const generateUUID = ()=>{
        let k = Math.round(Math.random()*alphabet.length)
        code.push(alphabet[k])
     }
-    code[6] = '-'
     return code.join("")
 }
 
