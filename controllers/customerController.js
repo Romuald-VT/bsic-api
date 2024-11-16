@@ -116,6 +116,20 @@ const showInfo = asyncHandler(async(req,res)=>{
     return res.status(200).json({token:token})
 })
 
+const getCustomerByUUID =(async(req,res)=>{
+
+    if(!req.params.code)
+        {
+            throw new Error('veuillez entrer un code utilisateur valide !')
+        }
+        const data = await Customer.findOne({customerUUID:req.params.code}).select('-customerUUId')
+        if(!data)
+        {
+            return res.status(404).json({message:"cet utilisateur est introuvable !"})
+        }
+        return res.status(200).json({data})
+})
+
 const updateCustomer = asyncHandler(async(req,res)=>{
     
     if(!req.params.email)
@@ -161,6 +175,6 @@ const deleteAllCustomers = asyncHandler(async(req,res)=>{
     return res.status(204).json({message: deletedCustomer})
 })
 
-module.exports = {getAllCustomers,addAmount,getCustomerByEmail,
+module.exports = {getAllCustomers,getCustomerByUUID,addAmount,getCustomerByEmail,
     createCustomer,updateCustomer,deleteCustomerByEmail,
     deleteAllCustomers,setAccountType,showInfo}

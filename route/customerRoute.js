@@ -1,6 +1,7 @@
 const express = require('express')
 const {getAllCustomers,
     getCustomerByEmail,
+    getCustomerByUUID,
     createCustomer,
     updateCustomer,
     deleteCustomerByEmail,
@@ -16,6 +17,7 @@ const customerRouter = express.Router()
 customerRouter.get('/info/all',authHandler,getAllCustomers)
 customerRouter.get('/info/:email',authHandler,getCustomerByEmail)
 customerRouter.get('/info/code/:code',showInfo)
+customerRouter.get('/v1/info/code/:code',authHandler,getCustomerByUUID)
 customerRouter.post('/info/:email',authHandler,addAmount)
 customerRouter.post('/acounttype/:email',authHandler,setAccountType)
 customerRouter.post('/accounts/add',authHandler,createCustomer)
