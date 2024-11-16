@@ -112,7 +112,7 @@ const showInfo = asyncHandler(async(req,res)=>{
     {
         return res.status(404).json({message:"cet utilisateur est introuvable !"})
     }
-    const token = await jwt.sign({id:data._id})
+    const token = await jwt.sign({id:data._id},process.env.JWT_SECRET)
     return res.status(200).json({token:token})
 })
 
