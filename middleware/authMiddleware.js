@@ -27,13 +27,13 @@ const customerAuthHandler = async(req,res,next)=>{
         return res.status(401).json({message: "acces refuse !"})
     }
     let decode = await jwt.verify(token,process.env.JWT_SECRET)
-    let user = await Customer.findById({_id:decode.id,email:decode.email}).select('-password')
+    let user = await Customer.findById({_id:decode.id})
     if(!user)
     {
         throw new Error("tentative d'intrusion arret du systeme !")
         process.env.exit(-1)
     }
-    req.user = user
+    req.customer = user
     next()
 
 }

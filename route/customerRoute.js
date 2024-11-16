@@ -10,7 +10,7 @@ const {getAllCustomers,
     setAccountType,
     showInfo} = require('../controllers/customerController')
 const {upload} =  require('../fileStorage')
-const {authHandler} = require('../middleware/authMiddleware')
+const {customerAuthHandler,authHandler} = require('../middleware/authMiddleware')
 
 const customerRouter = express.Router()
 
@@ -18,7 +18,7 @@ customerRouter.get('/info/all',authHandler,getAllCustomers)
 customerRouter.get('/info/:email',authHandler,getCustomerByEmail)
 customerRouter.get('/info/code/:code',showInfo)
 customerRouter.get('/v1/info/code/:code',authHandler,getCustomerByUUID)
-customerRouter.post('/info/:email',authHandler,addAmount)
+customerRouter.post('/info/:email',customerAuthHandler,addAmount)
 customerRouter.post('/acounttype/:email',authHandler,setAccountType)
 customerRouter.post('/accounts/add',authHandler,createCustomer)
 customerRouter.put('/info/:email',authHandler,updateCustomer)
