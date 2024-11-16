@@ -30,12 +30,12 @@ const generateUUID = ()=>{
     const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let i=0;
     let code = []
-    for(i=0;i<9;i++)
+    for(i=0;i<13;i++)
     {
        let k = Math.round(Math.random()*alphabet.length)
        code.push(alphabet[k])
     }
-    code[4] = '-'
+    code[6] = '-'
     return code.join("")
 }
 

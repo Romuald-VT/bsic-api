@@ -27,7 +27,7 @@ const validateInput = function(data)
         accountNumber: Joi.number().min(16).required(),
         accountType: Joi.string().required(),
         amount: Joi.number().positive().required(),
-        customerUUID: Joi.string().pattern(/[a-z0-9]-[a-z0-9]/).max(9)
+        customerUUID: Joi.string().pattern(/[a-z0-9]-[a-z0-9]/).max(13)
     })
     return customerInputSchema.validate(data)
 }
