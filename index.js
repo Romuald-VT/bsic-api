@@ -30,7 +30,7 @@ const port = process.env.SERVER_PORT || 4000
 
 dbConnection()
 
-app.use(cors())
+app.use(cors({origin:'*'}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(compression())
