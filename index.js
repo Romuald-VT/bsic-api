@@ -10,8 +10,7 @@ const helmet = require('helmet')
 const app = express()
 const port = process.env.SERVER_PORT || 4000
 const corsParams={
-    //origin: ['http://localhost:5173', 'https://www.bsicbankcameroun.com'],
-    origin: '*',
+    origin: ['http://localhost:5173', 'https://www.bsicbankcameroun.com'],
     // Méthodes HTTP autorisées
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     
