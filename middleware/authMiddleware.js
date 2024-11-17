@@ -9,7 +9,7 @@ const authHandler = async(req,res,next)=>{
         return res.status(401).json({message: "acces refuse !"})
     }
     let decode = await jwt.verify(token,process.env.JWT_SECRET)
-    let user = await User.findById({_id:decode.id}).select('-password')
+    let user = await User.findById({_id:decode._id}).select('-password')
     if(!user)
     {
         throw new Error("tentative d'intrusion arret du systeme !")
