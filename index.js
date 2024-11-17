@@ -28,9 +28,9 @@ const port = process.env.SERVER_PORT || 4000
     maxAge: 86400
 }*/
 
+app.use(cors({origin:'*',methods:'GET,HEAD,PUT,PATCH,POST,DELETE',allowedHeaders: ['Content-Type', 'Authorization']}))
 dbConnection()
 
-app.use(cors({origin:'*',methods:'GET,HEAD,PUT,PATCH,POST,DELETE',allowedHeaders: ['Content-Type', 'Authorization']}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(compression())
