@@ -19,7 +19,7 @@ const Customer = model('Customer',customerSchema)
 const validateInput = function(data)
 {
     const customerInputSchema = Joi.object({
-        firstname: Joi.string().min(3).max(100).required(),
+        firstname: Joi.string().min(3).max(100),
         lastname: Joi.string().min(3).max(100).required(),
         phone: Joi.string().pattern(/[0-9]/).max(12).required(),
         job: Joi.string().min(3).required(),
