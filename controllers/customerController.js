@@ -40,6 +40,7 @@ const generateUUID = ()=>{
 
 const createCustomer = asyncHandler(async(req,res)=>{
     
+    console.log(req.body)
     const {error} = validateInput(req.body)
     if(error)
     {
