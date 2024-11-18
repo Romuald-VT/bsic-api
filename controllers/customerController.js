@@ -45,6 +45,7 @@ const createCustomer = asyncHandler(async(req,res)=>{
     {
         throw new Error(error.details[0].message)
     }
+    console.log(req.body)
     const registeredCustomer = await Customer.findOne({email:req.body.email})
     if(registeredCustomer)
     {
