@@ -102,6 +102,7 @@ const createAdmin = asyncHandler(async(req,res)=>{
     {
         return res.status(401).json({message: "l'administrateur existe deja !"})
     }
+    console.log(req.body)
     const {error} = validateUser(req.body)
     if(error)
     {
