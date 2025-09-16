@@ -78,7 +78,7 @@ const addAmount = asyncHandler(async(req,res)=>{
     
     const client = await Customer.findOne({email:req.params.email})
 
-    if(!client) return req.status(404).json({message:"client introuvable !"})
+    if(!client) return res.status(404).json({message:"client introuvable !"})
     
     client.amount = req.body.amount
    const result =  await client.save()
